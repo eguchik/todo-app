@@ -109,8 +109,13 @@ const webhookServer = http.createServer((req, res) => {
       } else {
         console.log('not good');
       }
+      
+      res.writeHead(200, { 'Content-Type': 'text/plain' });
+      res.end('okay');
   
       res.sendStatus(200);
+    } else {
+      res.end('get method')
     }
   }
 }).listen(9000)
