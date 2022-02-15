@@ -8,7 +8,7 @@ const exec = require('child_process').exec;
 /* GET home page. */
 router.get("/", async function (req, res) {
   const tasks = await db.Task.findAll();
-  res.render("index", { title: "Lise 減るエスタ", tasks });
+  res.render("index", { title: "Part of your world", tasks });
 });
 
 router.post("/create", async function (req, res) {
@@ -38,7 +38,7 @@ router.post("/delete", async function (req, res) {
 });
 
 router.post("/webhook", async function (req, res) {
-  var crypto = reqire('crypto')
+  var crypto = require('crypto')
   var
     hmac,
     calculatedSignature,
