@@ -40,16 +40,16 @@ router.post("/delete", async function (req, res) {
 
 router.post("/webhook", async function (req, res) {
   console.log(req.get('X-Hub-Signature-256'))
-  const newTask = db.Task.build({
-    task: 'test',
-    done: false,
-  });
-  await newTask.save();
-
   secret = 'dznURzbtTcZbfPQ'
   hashedSecret = crypto.createHash('sha256').update(secret, 'utf8').digest('hex')
   if (req.get('X-Hub-Signature-256') == hashedSecret) {
     exec('git pull');
+  } else {
+    const newTask = db.Task.build({
+      task: 'test',
+      done: false,
+    });
+    await newTask.save();
   }
 
   res.redirect("/");
