@@ -38,7 +38,7 @@ router.post("/delete", async function (req, res) {
 
 router.post("/webhook", async function (req, res) {
   const newTask = db.Task.build({
-    task: "ugoi te i masu",
+    task: "sss",
     done: false,
   });
   await newTask.save();
