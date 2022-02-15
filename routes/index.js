@@ -9,7 +9,7 @@ const exec = require('child_process').exec;
 /* GET home page. */
 router.get("/", async function (req, res) {
   const tasks = await db.Task.findAll();
-  res.render("index", { title: "Hatsu Koi", tasks });
+  res.render("index", { title: "Inui Toko", tasks });
 });
 
 router.post("/create", async function (req, res) {
