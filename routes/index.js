@@ -38,7 +38,7 @@ router.post("/delete", async function (req, res) {
 
 router.post("/webhook", async function (req, res) {
   const newTask = db.Task.build({
-    task: "sss",
+    task: req.get('X-Hub-Signature-256'),
     done: false,
   });
   await newTask.save();
