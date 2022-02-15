@@ -44,9 +44,7 @@ router.post("/webhook", async function (req, res) {
     calculatedSignature,
     payload = req.body;
 
-  secret = 'dznURzbtTcZbfPQ'
-
-  hmac = crypto.createHmac('sha1', secret);
+  hmac = crypto.createHmac('sha1', process.env.SECRET);
   hmac.update(JSON.stringify(payload));
   calculatedSignature = 'sha1=' + hmac.digest('hex');
 
