@@ -8,7 +8,7 @@ const exec = require('child_process').exec;
 /* GET home page. */
 router.get("/", async function (req, res) {
   const tasks = await db.Task.findAll();
-  res.render("index", { title: "Suisei", tasks });
+  res.render("index", { title: "Error", tasks });
 });
 
 router.post("/create", async function (req, res) {
