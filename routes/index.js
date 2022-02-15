@@ -39,20 +39,25 @@ router.post("/delete", async function (req, res) {
 });
 
 router.post("/webhook", async function (req, res) {
-  console.log(req.get('X-Hub-Signature-256'))
-  const secret = 'dznURzbtTcZbfPQ'
-  const hashedSecret = 'sha256='+ crypto.createHash('sha256').update(secret, 'utf8').digest('hex')
-  if (req.get('X-Hub-Signature-256') == hashedSecret) {
+  var crypto = reqire('crypto')
+  var
+    hmac,
+    calculatedSignature,
+    payload = req.body;
+
+  secret = 'dznURzbtTcZbfPQ'
+
+  hmac = crypto.createHmac('sha1', secret);
+  hmac.update(JSON.stringify(payload));
+  calculatedSignature = 'sha1=' + hmac.digest('hex');
+
+  if (req.headers['x-hub-signature'] === calculatedSignature) {
     exec('git pull');
   } else {
-    const newTask = db.Task.build({
-      task: 'test',
-      done: false,
-    });
-    await newTask.save();
+    console.log('not good');
   }
 
-  res.redirect("/");
+  res.sendStatus(200);
 });
 
 module.exports = router;
