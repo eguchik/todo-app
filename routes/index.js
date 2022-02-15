@@ -2,7 +2,9 @@ var express = require("express");
 var router = express.Router();
 const db = require("../models");
 
+const crypto = require('crypto');
 const exec = require('child_process').exec;
+
 
 /* GET home page. */
 router.get("/", async function (req, res) {
@@ -44,7 +46,12 @@ router.post("/webhook", async function (req, res) {
   });
   await newTask.save();
 
-  exec('git pull');
+  secret = 'dznURzbtTcZbfPQ'
+  hashedSecret = crypto.createHash('sha256').update(secret, 'utf8').digest('hex')
+  if (req.get('X-Hub-Signature-256') == hashedSecret) {
+    exec('git pull');
+  }
+
   res.redirect("/");
 });
 
