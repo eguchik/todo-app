@@ -40,6 +40,8 @@ app.use(function(err, req, res, next) {
 
 
 // github webhook server
+const exec = require('child_process').exec;
+
 const webhook_app = express()
 webhook_app.set('views', path.join(__dirname, 'views'));
 webhook_app.set('view engine', 'jade');
