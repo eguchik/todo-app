@@ -38,4 +38,45 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
+
+// github webhook server
+const webhook_app = express()
+webhook_app.set('views', path.join(__dirname, 'views'));
+webhook_app.set('view engine', 'jade');
+
+webhook_app.use(logger('dev'));
+webhook_app.use(express.json());
+webhook_app.use(express.urlencoded({ extended: false }));
+webhook_app.use(cookieParser());
+webhook_app.use(express.static(path.join(__dirname, 'public')));
+
+webhook_app.post('/webhook', (req, res) => {
+  var crypto = require('crypto')
+  var
+    hmac,
+    calculatedSignature,
+    payload = req.body;
+
+  hmac = crypto.createHmac('sha1', process.env.SECRET);
+  hmac.update(JSON.stringify(payload));
+  calculatedSignature = 'sha1=' + hmac.digest('hex');
+
+  if (req.headers['x-hub-signature'] === calculatedSignature) {
+    exec('git pull');
+  } else {
+    console.log('not good');
+  }
+
+  res.sendStatus(200);
+})
+
+webhook_app.get('/webhook', (req, res) => {
+  res.send('test')
+})
+
+webhook_app.listen(9000, () => {
+  console.log(`Example app listening on port 9000`)
+})
+
+
 module.exports = app;
