@@ -19,9 +19,9 @@ block content
 
         form(action="delete", method="post")
           input(type='hidden' name='id' value=t.id)
-          button.delete X
+          button.delete 削除
 
   div.newtask
     form(action="create", method="post")
       input(type='text' name='task')
-      button(type='submit') Add
+      button(type='submit') 追加
