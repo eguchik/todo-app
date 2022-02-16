@@ -37,24 +37,4 @@ router.post("/delete", async function (req, res) {
   res.redirect("/");
 });
 
-router.post("/webhook", async function (req, res) {
-  var crypto = require('crypto')
-  var
-    hmac,
-    calculatedSignature,
-    payload = req.body;
-
-  hmac = crypto.createHmac('sha1', process.env.SECRET);
-  hmac.update(JSON.stringify(payload));
-  calculatedSignature = 'sha1=' + hmac.digest('hex');
-
-  if (req.headers['x-hub-signature'] === calculatedSignature) {
-    exec('git pull');
-  } else {
-    console.log('not good');
-  }
-
-  res.sendStatus(200);
-});
-
 module.exports = router;
