@@ -59,9 +59,9 @@ webhook_app.post('/webhook', (req, res) => {
     calculatedSignature,
     payload = req.body;
 
-  hmac = crypto.createHmac('sha1', process.env.SECRET);
+  hmac = crypto.createHmac('sha256', process.env.SECRET);
   hmac.update(JSON.stringify(payload));
-  calculatedSignature = 'sha1=' + hmac.digest('hex');
+  calculatedSignature = 'sha256=' + hmac.digest('hex');
 
   if (req.headers['x-hub-signature'] === calculatedSignature) {
     exec('git pull');
