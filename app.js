@@ -66,7 +66,8 @@ webhook_app.post('/webhook', (req, res) => {
   if (req.headers['X-Hub-Signature-256'] === calculatedSignature) {
     exec('sudo git pull');
   } else {
-    console.log('not good');
+    console.log(req.headers['X-Hub-Signature-256']);
+    console.log(calculatedSignature);
   }
 
   res.sendStatus(200);
