@@ -60,14 +60,16 @@ webhook_app.post('/webhook', (req, res) => {
     calculatedSignature,
     payload = req.body;
 
-  hmac = crypto.createHmac('sha1', process.env.SECRET);
+  hmac = crypto.createHmac('sha256', process.env.SECRET);
   hmac.update(JSON.stringify(payload));
-  calculatedSignature = 'sha1=' + hmac.digest('hex');
+  calculatedSignature = 'sha256=' + hmac.digest('hex');
   
-  if (compare(req.headers['x-hub-signature'], calculatedSignature)) {
+  if (compare(req.headers['x-hub-signature-256'], calculatedSignature)) {
     exec('git pull');
+    console.log(req.headers['x-hub-signature-256']);
+    console.log(calculatedSignature)
   } else {
-    console.log(req.headers['x-hub-signature']);
+    console.log(req.headers['x-hub-signature-256']);
     console.log(calculatedSignature)
   }
 
