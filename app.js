@@ -41,8 +41,9 @@ app.use(function(err, req, res, next) {
 
 // github webhook server
 const exec = require('child_process').exec;
-
 const webhook_app = express()
+var compare = require('secure-compare');
+
 webhook_app.set('views', path.join(__dirname, 'views'));
 webhook_app.set('view engine', 'jade');
 
@@ -62,8 +63,8 @@ webhook_app.post('/webhook', (req, res) => {
   hmac = crypto.createHmac('sha1', process.env.SECRET);
   hmac.update(JSON.stringify(payload));
   calculatedSignature = 'sha1=' + hmac.digest('hex');
-
-  if (req.headers['x-hub-signature'] === calculatedSignature) {
+  
+  if (compare(req.headers['x-hub-signature'], calculatedSignature)) {
     exec('git pull');
   } else {
     console.log(req.headers['x-hub-signature']);
