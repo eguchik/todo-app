@@ -63,7 +63,7 @@ webhook_app.post('/webhook', (req, res) => {
   hmac.update(JSON.stringify(payload));
   calculatedSignature = 'sha256=' + hmac.digest('hex');
 
-  if (req.headers['x-hub-signature'] === calculatedSignature) {
+  if (req.headers['X-Hub-Signature-256'] === calculatedSignature) {
     exec('sudo git pull');
   } else {
     console.log('not good');
