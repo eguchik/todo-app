@@ -73,12 +73,8 @@ webhook_app.post('/webhook', (req, res) => {
   res.sendStatus(200);
 })
 
-webhook_app.get('/webhook', (req, res) => {
-  res.send('test')
-})
-
 webhook_app.listen(9000, () => {
-  console.log(`Example app listening on port 9000`)
+  console.log(`Listening on port 9000`)
 })
 
 
