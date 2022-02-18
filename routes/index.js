@@ -6,7 +6,7 @@ const db = require("../models");
 /* GET home page. */
 router.get("/", async function (req, res) {
   const tasks = await db.Task.findAll();
-  res.render("index", { title: "----- TODO LIST -----", tasks });
+  res.render("index", { title: "TODO LIST", tasks });
 });
 
 router.post("/create", async function (req, res) {
